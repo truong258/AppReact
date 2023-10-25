@@ -16,35 +16,17 @@ const MovieList = () => {
       setMovies(data.results);
     }
   }, []);
-  console.log("movies", movies);
+  console.log(movies);
 
   return (
     <div className="movies-list">
       <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCard></MovieCard>
-        </SwiperSlide>
+        {movies.length > 0 &&
+          movies.map((item) => (
+            <SwiperSlide key={item.id}>
+              <MovieCard item={item}></MovieCard>
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );
