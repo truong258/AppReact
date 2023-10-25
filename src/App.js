@@ -1,5 +1,9 @@
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import MovieCard from "./components/movie/MovieCard";
+import { SwiperSlide, Swiper } from "swiper/react";
+import "swiper/scss";
+import MovieList from "./components/movie/MovieList";
 
 function App() {
   return (
@@ -39,67 +43,19 @@ function App() {
         <h2 className="capitalize text-white mb-5 text-3xl font-bold">
           Now playing
         </h2>
-        <div className="movies-list grid grid-cols-4 gap-10">
-          <div className="movie-card rounded-lg p-3 bg-slate-800 text-white">
-            <img
-              src="https://images.hdqwalls.com/download/avengers-endgame-2019-official-new-poster-3p-1280x720.jpg"
-              alt=""
-              className="w-full h-[250px] object-cover rounded-lg mb-5"
-            />
-            <h3 className=" text-xl font-bold mb-3">Spiderman: Homecoming</h3>
-            <div className="flex items-center justify-between text-sm opacity-50 mb-10">
-              <span>2017</span>
-              <span>7.4</span>
-            </div>
-            <button className="py-3 px-6 rounded-lg capitalize bg-primary w-full">
-              Watch now
-            </button>
-          </div>
-        </div>
+        <MovieList></MovieList>
       </section>
       <section className="movies-layout page-container-fluid pb-20">
         <h2 className="capitalize text-white mb-5 text-3xl font-bold">
           Top Rated
         </h2>
-        <div className="movies-list grid grid-cols-4 gap-10">
-          <div className="movie-card rounded-lg p-3 bg-slate-800 text-white">
-            <img
-              src="https://images.hdqwalls.com/download/avengers-endgame-2019-official-new-poster-3p-1280x720.jpg"
-              alt=""
-              className="w-full h-[250px] object-cover rounded-lg mb-5"
-            />
-            <h3 className=" text-xl font-bold mb-3">Spiderman: Homecoming</h3>
-            <div className="flex items-center justify-between text-sm opacity-50 mb-10">
-              <span>2017</span>
-              <span>7.4</span>
-            </div>
-            <button className="py-3 px-6 rounded-lg capitalize bg-primary w-full">
-              Watch now
-            </button>
-          </div>
-        </div>
+        <MovieList></MovieList>
       </section>
       <section className="movies-layout page-container-fluid pb-20">
         <h2 className="capitalize text-white mb-5 text-3xl font-bold">
           Top Trending
         </h2>
-        <div className="movies-list grid grid-cols-4 gap-10">
-          <div className="movie-card rounded-lg p-3 bg-slate-800 text-white">
-            <img
-              src="https://images.hdqwalls.com/download/avengers-endgame-2019-official-new-poster-3p-1280x720.jpg"
-              alt=""
-              className="w-full h-[250px] object-cover rounded-lg mb-5"
-            />
-            <h3 className=" text-xl font-bold mb-3">Spiderman: Homecoming</h3>
-            <div className="flex items-center justify-between text-sm opacity-50 mb-10">
-              <span>2017</span>
-              <span>7.4</span>
-            </div>
-            <button className="py-3 px-6 rounded-lg capitalize bg-primary w-full">
-              Watch now
-            </button>
-          </div>
-        </div>
+        <MovieList></MovieList>
       </section>
     </Fragment>
   );
