@@ -4,18 +4,18 @@ import MovieCard from "./MovieCard";
 import useSWR from "swr";
 import { fetcher } from "../../config";
 
-const MovieList = () => {
+const MovieList = ({ type = "now_playing" }) => {
   const [movies, setMovies] = useState([]);
   const { data, error, isLoading } = useSWR(
-    "https://api.themoviedb.org/3/movie/now_playing?api_key=a2c6e1101cef616ebfd793b414446804",
+    `https://api.themoviedb.org/3/movie/${type}?api_key=a2c6e1101cef616ebfd793b414446804`,
     fetcher
   );
-
+  console.log("data", data);
   useEffect(() => {
-    if (data !== undefined) {
+    if (data && data.results) {
       setMovies(data.results);
     }
-  }, []);
+  }, [data]);
   console.log(movies);
 
   return (

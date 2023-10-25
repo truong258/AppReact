@@ -49,13 +49,13 @@ function App() {
         <h2 className="capitalize text-white mb-5 text-3xl font-bold">
           Top Rated
         </h2>
-        <MovieList></MovieList>
+        <MovieList type="top_rated"></MovieList>
       </section>
       <section className="movies-layout page-container-fluid pb-20">
         <h2 className="capitalize text-white mb-5 text-3xl font-bold">
           Top Trending
         </h2>
-        <MovieList></MovieList>
+        <MovieList type="popular"></MovieList>
       </section>
     </Fragment>
   );
