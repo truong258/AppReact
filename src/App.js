@@ -1,8 +1,5 @@
-import logo from "./logo.svg";
-import "./App.css";
-
 function App() {
-  return <div className="App">app</div>;
+  return <div className="text-center">app</div>;
 }
 
 export default App;
