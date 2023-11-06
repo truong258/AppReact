@@ -2,6 +2,9 @@ import React from "react";
 import { useFetcher, useParams } from "react-router-dom";
 import useSWR from "swr";
 import { fetcher } from "../config";
+
+import { SwiperSlide, Swiper } from "swiper/react";
+import MovieCard from "../components/movie/MovieCard";
 //endpoint: https://api.themoviedb.org/3/movie/{movie_id}?api_key=a2c6e1101cef616ebfd793b414446804
 
 const MovieDetailPage = () => {
@@ -53,6 +56,7 @@ const MovieDetailPage = () => {
         </p>
         <MovieCredits></MovieCredits>
         <MovieVideos></MovieVideos>
+        <MovieSimilar></MovieSimilar>
       </div>
     )
   );
@@ -99,8 +103,62 @@ function MovieVideos() {
 
   if (!data) return null;
   console.log("datavideo", data);
+  const { results } = data;
+  if (!results || results.length <= 0) return null;
   //<iframe width="853" height="480" src="https://www.youtube.com/embed/EQe1m92es8o" title="40 CA KHÚC QUỐC TẾ ĐẠT TRÊN 1 TỶ VIEW NGHE HOÀI KHÔNG CHÁN - NHẠC QUỐC TẾ HAY NHẤT 2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-  return <div></div>;
+  return (
+    <div className="py-10">
+      <div className="flex flex-col gap-5">
+        {results.slice(0, 2).map((item) => (
+          <div className="" key={item.id}>
+            <h3 className="mb-5 text-xl font-medium p-3 bg-secondary inline-block">
+              {item.name}
+            </h3>
+            <div key={item.id} className="w-full aspect-video">
+              <iframe
+                width="853"
+                height="480"
+                src={`https://www.youtube.com/embed/${item.key}`}
+                title="40 CA KHÚC QUỐC TẾ ĐẠT TRÊN 1 TỶ VIEW NGHE HOÀI KHÔNG CHÁN - NHẠC QUỐC TẾ HAY NHẤT 2023"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full object-fill"
+              ></iframe>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MovieSimilar() {
+  const { movieId } = useParams();
+  const { data, error } = useSWR(
+    `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=a2c6e1101cef616ebfd793b414446804`,
+    fetcher
+  );
+
+  if (!data) return null;
+  console.log("datasimilar", data);
+  const { results } = data;
+  if (!results || results.length <= 0) return null;
+  return (
+    <div className="py-10">
+      <h2 className="text-3xl font-medium mb-10">Similar Moives</h2>
+      <div className="movies-list">
+        <Swiper grabCursor={"true"} spaceBetween={40} slidesPerView={"auto"}>
+          {results.length > 0 &&
+            results.map((item) => (
+              <SwiperSlide key={item.id}>
+                <MovieCard item={item}></MovieCard>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </div>
+    </div>
+  );
 }
 export default MovieDetailPage;
