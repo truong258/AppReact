@@ -48,12 +48,59 @@ const MovieDetailPage = () => {
             ))}
           </div>
         )}
-        <p className="text-center leading-relaxed max-w-[600px] mx-auto">
+        <p className="text-center leading-relaxed max-w-[600px] mx-auto mb-10">
           {overview}
         </p>
+        <MovieCredits></MovieCredits>
+        <MovieVideos></MovieVideos>
       </div>
     )
   );
 };
 
+function MovieCredits() {
+  //endpointActor: https://api.themoviedb.org/3/movie/{movie_id}/credits?api_key=a2c6e1101cef616ebfd793b414446804
+  const { movieId } = useParams();
+  const { data, error } = useSWR(
+    `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=a2c6e1101cef616ebfd793b414446804`,
+    fetcher
+  );
+  console.log("dataactor", data);
+
+  if (!data) return null;
+  const { cast } = data;
+  if (!cast || cast.length <= 0) return null;
+
+  return (
+    <div className="py-10">
+      <h2 className="text-center text-6xl mb-10">Casts</h2>
+      <div className="grid grid-cols-4 gap-5">
+        {cast.slice(0, 4).map((item) => (
+          <div className="cast-item" key={item.id}>
+            <img
+              src={`https://image.tmdb.org/t/p/original/${item.profile_path}`}
+              className="w-full h-[350px] object-cover rounded-lg mb-3"
+              alt=""
+            />
+            <h3 className="text-xl text-center font-medium">{item.name}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MovieVideos() {
+  const { movieId } = useParams();
+  const { data, error } = useSWR(
+    `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=a2c6e1101cef616ebfd793b414446804`,
+    fetcher
+  );
+
+  if (!data) return null;
+  console.log("datavideo", data);
+  //<iframe width="853" height="480" src="https://www.youtube.com/embed/EQe1m92es8o" title="40 CA KHÚC QUỐC TẾ ĐẠT TRÊN 1 TỶ VIEW NGHE HOÀI KHÔNG CHÁN - NHẠC QUỐC TẾ HAY NHẤT 2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+  return <div></div>;
+}
 export default MovieDetailPage;
