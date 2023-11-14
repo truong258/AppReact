@@ -4,10 +4,19 @@ import useSWR from "swr";
 import { fetcher } from "../config";
 import MovieCard from "../components/movie/MovieCard";
 import useDebounce from "../useDebounce";
+import ReactPaginate from "react-paginate";
 
 const pageCount = 5;
+const itemsPerPage = 20;
 
 const MoviePage = () => {
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+
+  // Simulate fetching items from another resources.
+  // (This could be items from props; or items loaded in a local state
+  // from an API endpoint with useEffect and useState)
+
   const [nextPage, setNextPage] = useState(1);
   const [filter, setFilter] = useState("");
   const [url, setUrl] = useState(
@@ -37,6 +46,19 @@ const MoviePage = () => {
     console.log("page", page);
     console.log("total page", total_pages);
   }
+
+  useEffect(() => {
+    if (!data || !data.total_results) return;
+    setPageCount(Math.ceil(data.total_results / itemsPerPage));
+  }, [data, itemOffset]);
+  console.log("datapage", data);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % data.total_results;
+    setItemOffset(newOffset);
+    setNextPage(event.selected + 1);
+  };
 
   return (
     <div className="py-10">
@@ -79,7 +101,19 @@ border-t-4 mx-auto animate-spin"
             <MovieCard key={item.id} item={item}></MovieCard>
           ))}
       </div>
-      <div className="flex items-center justify-center mt-10 gap-x-5">
+      <div className="mt-10">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          className="pagination"
+        />
+      </div>
+      <div className="flex items-center justify-center mt-10 gap-x-5 hidden">
         <span className="cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
